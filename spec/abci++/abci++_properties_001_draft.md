@@ -506,7 +506,7 @@ to hit the bug at the same point. There is currently no clear solution to help w
 the Application designers/implementors must proceed very carefully with the logic/implementation
 of `ProcessProposal`. As a general rule `ProcessProposal` _should_ always accept the block.
 
-According to the Tendermint algorithm, a correct process can only broadcast one precommit message in round $r$, height $h$.
+According to the Tendermint algorithm, a correct process can broadcast at most one precommit message in round $r$, height $h$.
 Since, as stated in the [Description](#description) section, `ResponseExtendVote` is only called when Tendermint
 is about to broadcast a non-`nil` precommit message, a correct process can only produce one vote extension in round $r$, height $h$.
 Let $e^r_p$ the vote extension that the Application of a correct process $p$ returns via `ResponseExtendVote` in round $r$, height $h$.
