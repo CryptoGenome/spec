@@ -102,7 +102,7 @@ and _p_'s _validValue_ is `nil`:
     * in both modes, the Application can manipulate transactions
         * leave transactions untouched - `TxAction = UNMODIFIED`
         * add new transactions (not previously in the mempool) - `TxAction = ADDED`
-        * removed transactions (invalid) from the proposal and from the mempool - `TxAction = REMOVED`
+        * remove transactions (invalid) from the proposal and from the mempool - `TxAction = REMOVED`
         * remove transactions from the proposal but not from the mempool (effectively _delaying_ them) - the
           Application removes the transaction from the list
         * modify transactions (e.g. aggregate them) - `TxAction = ADDED` followed by `TxAction = REMOVED`
