@@ -485,7 +485,7 @@ On the other hand, if there is a deterministic bug in `PrepareProposal` or `Proc
 strictly speaking, this makes all processes that hit the bug byzantine. This is a problem in practice,
 as very often validators are running the Application from the same codebase, so potentially _all_ would
 likely hit the bug at the same time. This would result in most (or all) processes prevoting `nil`, with the
-serious consequences on Tendermint's liveness that this entails.
+serious consequences on Tendermint's liveness that this entails. Due to its criticality, Property 3 is a target for extensive testing and automated verification.
 
 * Property 4 [`ProcessProposal`, determinism-1]: For any correct process $p$, and any arbitrary block $v'$,
   if $p$'s Tendermint calls `RequestProcessProposal` on $v'$ at height $h$,
