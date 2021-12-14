@@ -487,9 +487,9 @@ as very often validators are running the Application from the same codebase, so 
 likely hit the bug at the same time. This would result in most (or all) processes prevoting `nil`, with the
 serious consequences on Tendermint's liveness that this entails. Due to its criticality, Property 3 is a target for extensive testing and automated verification.
 
-* Property 4 [`ProcessProposal`, determinism-1]: For any correct process $p$, and any arbitrary block $v'$,
+* Property 4 [`ProcessProposal`, determinism-1]: `ProcessProposal` is a (deterministic) function of the current state and the block that is about to be applied. In other words, for any correct process $p$, and any arbitrary block $v'$,
   if $p$'s Tendermint calls `RequestProcessProposal` on $v'$ at height $h$,
-  then $p$'s Application's acceptance or rejection exclusively depends on $v'$ and $s_{p,h-1}$.
+  then $p$'s Application's acceptance or rejection **exclusively** depends on $v'$ and $s_{p,h-1}$.
 
 * Property 5 [`ProcessProposal`, determinism-2]: For any two correct processes $p$ and $q$, and any arbitrary block $v'$,
   if $p$'s (resp. $q$'s) Tendermint calls `RequestProcessProposal` on $v'$ at height $h$,
