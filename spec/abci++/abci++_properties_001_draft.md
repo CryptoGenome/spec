@@ -31,7 +31,7 @@ From the App's perspective, they'll probably skip ProcessProposal
 
     | Name                    | Type                                             | Description                                                                                 | Field Number |
     |-------------------------|--------------------------------------------------|---------------------------------------------------------------------------------------------|--------------|
-    | modified                | bool                                             | The Application sets it to true to denote it did not make changes                           | 1            |
+    | modified                | bool                                             | The Application sets it to true to denote that it made changes                           | 1            |
     | tx                      | repeated [TransactionRecord](#transactionrecord) | Possibly modified list of transactions that have been picked as part of the proposed block. | 2            |
     | data                    | bytes                                            | The Merkle root hash of the application state.                                              | 3            |
     | validator_updates       | repeated [ValidatorUpdate](#validatorupdate)     | Changes to validator set (set voting power to 0 to remove).                                 | 4            |
