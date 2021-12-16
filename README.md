@@ -1,3 +1,7 @@
+(This is a fork from [tendermin/sepc](https://github.com/tendermint/spec). This only removes all GoGo extension syntax from all proto files.)
+
+---
+
 # Tendermint Spec
 
 This repository contains specifications for the Tendermint protocol.
@@ -42,7 +46,7 @@ maintained by Informal Systems.
 ### RFC
 
 - [RFC](./rfc/README.md): RFCs describe proposals to change the spec.
-  
+
 ### ProtoBuf
 
 - [Proto](./proto/README.md): The data structures of the Tendermint protocol are located in the `proto` directory. These specify P2P messages that each implementation should follow to be compatible.
