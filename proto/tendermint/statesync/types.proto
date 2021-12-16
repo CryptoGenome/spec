@@ -1,7 +1,6 @@
 syntax = "proto3";
 package tendermint.statesync;
 
-import "gogoproto/gogo.proto";
 import "tendermint/types/types.proto";
 import "tendermint/types/params.proto";
 
@@ -56,6 +55,5 @@ message ParamsRequest {
 
 message ParamsResponse {
   uint64                           height           = 1;
-  tendermint.types.ConsensusParams consensus_params = 2
-      [(gogoproto.nullable) = false];
+  tendermint.types.ConsensusParams consensus_params = 2;
 }

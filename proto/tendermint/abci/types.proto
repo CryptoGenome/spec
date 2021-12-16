@@ -10,11 +10,9 @@ import "tendermint/types/types.proto";
 import "tendermint/crypto/keys.proto";
 import "tendermint/types/params.proto";
 import "google/protobuf/timestamp.proto";
-import "gogoproto/gogo.proto";
 
 // This file is copied from http://github.com/tendermint/abci
 // NOTE: When using custom types, mind the warnings.
-// https://github.com/gogo/protobuf/blob/master/custom_types.md#warnings-and-issues
 
 //----------------------------------------
 // Request types
@@ -52,10 +50,10 @@ message RequestInfo {
 }
 
 message RequestInitChain {
-  google.protobuf.Timestamp        time             = 1 [(gogoproto.nullable) = false, (gogoproto.stdtime) = true];
+  google.protobuf.Timestamp        time             = 1;
   string                           chain_id         = 2;
   tendermint.types.ConsensusParams consensus_params = 3;
-  repeated ValidatorUpdate         validators       = 4 [(gogoproto.nullable) = false];
+  repeated ValidatorUpdate         validators       = 4;
   bytes                            app_state_bytes  = 5;
   int64                            initial_height   = 6;
 }
@@ -69,14 +67,14 @@ message RequestQuery {
 
 message RequestBeginBlock {
   bytes                   hash                 = 1;
-  tendermint.types.Header header               = 2 [(gogoproto.nullable) = false];
-  LastCommitInfo          last_commit_info     = 3 [(gogoproto.nullable) = false];
-  repeated Evidence       byzantine_validators = 4 [(gogoproto.nullable) = false];
+  tendermint.types.Header header               = 2;
+  LastCommitInfo          last_commit_info     = 3;
+  repeated Evidence       byzantine_validators = 4;
 }
 
 enum CheckTxType {
-  NEW     = 0 [(gogoproto.enumvalue_customname) = "New"];
-  RECHECK = 1 [(gogoproto.enumvalue_customname) = "Recheck"];
+  NEW     = 0;
+  RECHECK = 1;
 }
 
 message RequestCheckTx {
@@ -164,7 +162,7 @@ message ResponseInfo {
 
 message ResponseInitChain {
   tendermint.types.ConsensusParams consensus_params = 1;
-  repeated ValidatorUpdate         validators       = 2 [(gogoproto.nullable) = false];
+  repeated ValidatorUpdate         validators       = 2;
   bytes                            app_hash         = 3;
 }
 
@@ -182,7 +180,7 @@ message ResponseQuery {
 }
 
 message ResponseBeginBlock {
-  repeated Event events = 1 [(gogoproto.nullable) = false, (gogoproto.jsontag) = "events,omitempty"];
+  repeated Event events = 1;
 }
 
 message ResponseCheckTx {
@@ -190,9 +188,9 @@ message ResponseCheckTx {
   bytes          data       = 2;
   string         log        = 3;  // nondeterministic
   string         info       = 4;  // nondeterministic
-  int64          gas_wanted = 5 [json_name = "gas_wanted"];
-  int64          gas_used   = 6 [json_name = "gas_used"];
-  repeated Event events     = 7 [(gogoproto.nullable) = false, (gogoproto.jsontag) = "events,omitempty"];
+  int64          gas_wanted = 5;
+  int64          gas_used   = 6;
+  repeated Event events     = 7;
   string         codespace  = 8;
   string         sender     = 9;
   int64          priority   = 10;
@@ -207,17 +205,16 @@ message ResponseDeliverTx {
   bytes          data       = 2;
   string         log        = 3;  // nondeterministic
   string         info       = 4;  // nondeterministic
-  int64          gas_wanted = 5 [json_name = "gas_wanted"];
-  int64          gas_used   = 6 [json_name = "gas_used"];
-  repeated Event events     = 7
-      [(gogoproto.nullable) = false, (gogoproto.jsontag) = "events,omitempty"];  // nondeterministic
-  string codespace = 8;
+  int64          gas_wanted = 5;
+  int64          gas_used   = 6;
+  repeated Event events     = 7;  // nondeterministic
+  string         codespace  = 8;
 }
 
 message ResponseEndBlock {
-  repeated ValidatorUpdate         validator_updates       = 1 [(gogoproto.nullable) = false];
+  repeated ValidatorUpdate         validator_updates       = 1;
   tendermint.types.ConsensusParams consensus_param_updates = 2;
-  repeated Event                   events                  = 3 [(gogoproto.nullable) = false, (gogoproto.jsontag) = "events,omitempty"];
+  repeated Event                   events                  = 3;
 }
 
 message ResponseCommit {
@@ -267,7 +264,7 @@ message ResponseApplySnapshotChunk {
 
 message LastCommitInfo {
   int32             round = 1;
-  repeated VoteInfo votes = 2 [(gogoproto.nullable) = false];
+  repeated VoteInfo votes = 2;
 }
 
 // Event allows application developers to attach additional information to
@@ -275,7 +272,7 @@ message LastCommitInfo {
 // Later, transactions may be queried using these events.
 message Event {
   string                  type       = 1;
-  repeated EventAttribute attributes = 2 [(gogoproto.nullable) = false, (gogoproto.jsontag) = "attributes,omitempty"];
+  repeated EventAttribute attributes = 2;
 }
 
 // EventAttribute is a single key-value pair, associated with an event.
@@ -292,7 +289,7 @@ message TxResult {
   int64             height = 1;
   uint32            index  = 2;
   bytes             tx     = 3;
-  ResponseDeliverTx result = 4 [(gogoproto.nullable) = false];
+  ResponseDeliverTx result = 4;
 }
 
 //----------------------------------------
@@ -307,13 +304,13 @@ message Validator {
 
 // ValidatorUpdate
 message ValidatorUpdate {
-  tendermint.crypto.PublicKey pub_key = 1 [(gogoproto.nullable) = false];
+  tendermint.crypto.PublicKey pub_key = 1;
   int64                       power   = 2;
 }
 
 // VoteInfo
 message VoteInfo {
-  Validator validator         = 1 [(gogoproto.nullable) = false];
+  Validator validator         = 1;
   bool      signed_last_block = 2;
 }
 
@@ -326,11 +323,11 @@ enum EvidenceType {
 message Evidence {
   EvidenceType type = 1;
   // The offending validator
-  Validator validator = 2 [(gogoproto.nullable) = false];
+  Validator validator = 2;
   // The height when the offense occurred
   int64 height = 3;
   // The corresponding time where the offense occurred
-  google.protobuf.Timestamp time = 4 [(gogoproto.nullable) = false, (gogoproto.stdtime) = true];
+  google.protobuf.Timestamp time = 4;
   // Total voting power of the validator set in case the ABCI application does
   // not store historical validators.
   // https://github.com/tendermint/tendermint/issues/4581
