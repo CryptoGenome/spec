@@ -2,8 +2,8 @@ syntax = "proto3";
 package tendermint.types;
 
 import "google/protobuf/timestamp.proto";
-import "tendermint/types/types.proto";
-import "tendermint/types/validator.proto";
+import "libs/vendors/tendermint/spec/proto/tendermint/types/types.proto";
+import "libs/vendors/tendermint/spec/proto/tendermint/types/validator.proto";
 
 message Evidence {
   oneof sum {

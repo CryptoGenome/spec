@@ -2,9 +2,9 @@ syntax = "proto3";
 package tendermint.types;
 
 import "google/protobuf/timestamp.proto";
-import "tendermint/crypto/proof.proto";
-import "tendermint/version/types.proto";
-import "tendermint/types/validator.proto";
+import "libs/vendors/tendermint/spec/proto/tendermint/crypto/proof.proto";
+import "libs/vendors/tendermint/spec/proto/tendermint/version/types.proto";
+import "libs/vendors/tendermint/spec/proto/tendermint/types/validator.proto";
 
 // BlockIdFlag indicates which BlcokID the signature is for
 enum BlockIDFlag {

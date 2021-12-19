@@ -1,8 +1,8 @@
 syntax = "proto3";
 package tendermint.statesync;
 
-import "tendermint/types/types.proto";
-import "tendermint/types/params.proto";
+import "libs/vendors/tendermint/spec/proto/tendermint/types/types.proto";
+import "libs/vendors/tendermint/spec/proto/tendermint/types/params.proto";
 
 message Message {
   oneof sum {

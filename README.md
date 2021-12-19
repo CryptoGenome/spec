@@ -1,4 +1,4 @@
-(This is a fork from [tendermin/sepc](https://github.com/tendermint/spec). This only removes all GoGo extension syntax from all proto files.)
+(This is a fork from [tendermin/sepc](https://github.com/tendermint/spec). This repo removes all GoGo extension syntax from all proto files and add bazel support.)
 
 ---
 

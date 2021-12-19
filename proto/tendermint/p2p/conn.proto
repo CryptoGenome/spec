@@ -1,7 +1,7 @@
 syntax = "proto3";
 package tendermint.p2p;
 
-import "tendermint/crypto/keys.proto";
+import "libs/vendors/tendermint/spec/proto/tendermint/crypto/keys.proto";
 
 message PacketPing {}
 

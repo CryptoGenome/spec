@@ -1,7 +1,7 @@
 syntax = "proto3";
 package tendermint.blocksync;
 
-import "tendermint/types/block.proto";
+import "libs/vendors/tendermint/spec/proto/tendermint/types/block.proto";
 
 // BlockRequest requests a block for a specific height
 message BlockRequest {

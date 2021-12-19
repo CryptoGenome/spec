@@ -1,8 +1,8 @@
 syntax = "proto3";
 package tendermint.types;
 
-import "tendermint/types/types.proto";
-import "tendermint/types/evidence.proto";
+import "libs/vendors/tendermint/spec/proto/tendermint/types/types.proto";
+import "libs/vendors/tendermint/spec/proto/tendermint/types/evidence.proto";
 
 message Block {
   Header                        header      = 1;

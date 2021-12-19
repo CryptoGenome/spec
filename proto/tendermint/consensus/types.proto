@@ -1,8 +1,8 @@
 syntax = "proto3";
 package tendermint.consensus;
 
-import "tendermint/types/types.proto";
-import "tendermint/libs/bits/types.proto";
+import "libs/vendors/tendermint/spec/proto/tendermint/types/types.proto";
+import "libs/vendors/tendermint/spec/proto/tendermint/libs/bits/types.proto";
 
 // NewRoundStep is sent for every step taken in the ConsensusState.
 // For every height/round/step transition

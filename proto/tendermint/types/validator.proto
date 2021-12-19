@@ -1,7 +1,7 @@
 syntax = "proto3";
 package tendermint.types;
 
-import "tendermint/crypto/keys.proto";
+import "libs/vendors/tendermint/spec/proto/tendermint/crypto/keys.proto";
 
 message ValidatorSet {
   repeated Validator validators         = 1;

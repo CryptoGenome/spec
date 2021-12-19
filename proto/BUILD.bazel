@@ -1,0 +1,160 @@
+# Copyright (C) 2021 CryptoGenome dev team & contributors
+#
+# This file is part of CryptoGenome.
+#
+# CryptoGenome is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# CryptoGenome is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with CryptoGenome.  If not, see <http://www.gnu.org/licenses/>.
+# load("@rules_proto//proto:defs.bzl", "proto_library")
+
+proto_library(
+    name = "crypto",
+    srcs = [
+        "tendermint/crypto/keys.proto",
+        "tendermint/crypto/proof.proto",
+    ],
+)
+
+proto_library(
+    name = "bits",
+    srcs = ["tendermint/libs/bits/types.proto"],
+)
+
+proto_library(
+    name = "mempool",
+    srcs = ["tendermint/mempool/types.proto"],
+)
+
+proto_library(
+    name = "version",
+    srcs = ["tendermint/version/types.proto"],
+)
+
+proto_library(
+    name = "types-validator",
+    srcs = [
+        "tendermint/types/validator.proto",
+    ],
+    deps = [":crypto"],
+)
+
+proto_library(
+    name = "types-block",
+    srcs = [
+        "tendermint/types/block.proto",
+    ],
+    deps = [
+        ":types-evidence",
+        ":types-types",
+    ],
+)
+
+proto_library(
+    name = "types-evidence",
+    srcs = [
+        "tendermint/types/evidence.proto",
+    ],
+    deps = [
+        ":types-types",
+        ":types-validator",
+        "@com_google_protobuf//:timestamp_proto",
+    ],
+)
+
+proto_library(
+    name = "types-params",
+    srcs = [
+        "tendermint/types/params.proto",
+    ],
+    deps = [
+        "@com_google_protobuf//:duration_proto",
+    ],
+)
+
+proto_library(
+    name = "types-types",
+    srcs = [
+        "tendermint/types/types.proto",
+    ],
+    deps = [
+        ":crypto",
+        ":types-validator",
+        ":version",
+        "@com_google_protobuf//:timestamp_proto",
+    ],
+)
+
+proto_library(
+    name = "types",
+    srcs = [],
+    deps = [
+        "types-block",
+        "types-evidence",
+        "types-params",
+        "types-validator",
+        ":types-types",
+    ],
+)
+
+proto_library(
+    name = "blocksync",
+    srcs = ["tendermint/blocksync/types.proto"],
+    deps = [
+        ":types",
+    ],
+)
+
+proto_library(
+    name = "censensus",
+    srcs = ["tendermint/censensus/types.proto"],
+    deps = [
+        ":bits",
+        ":types",
+    ],
+)
+
+proto_library(
+    name = "p2p",
+    srcs = [
+        "tendermint/p2p/conn.proto",
+        "tendermint/p2p/pex.proto",
+        "tendermint/p2p/types.proto",
+    ],
+    deps = [
+        ":crypto",
+    ],
+)
+
+proto_library(
+    name = "statesync",
+    srcs = ["tendermint/statesync/types.proto"],
+    deps = [":types"],
+)
+
+proto_library(
+    name = "abci",
+    srcs = ["tendermint/abci/types.proto"],
+    deps = [
+        ":crypto",
+        ":types",
+        "@com_google_protobuf//:timestamp_proto",
+    ],
+)
+
+proto_library(
+    name = "tendermint_protos",
+    srcs = [],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":abci",
+    ],
+)
