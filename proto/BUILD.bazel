@@ -14,7 +14,7 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with CryptoGenome.  If not, see <http://www.gnu.org/licenses/>.
-# load("@rules_proto//proto:defs.bzl", "proto_library")
+load("@rules_proto_grpc//cpp:defs.bzl", "cpp_grpc_library")
 
 proto_library(
     name = "crypto",
@@ -22,21 +22,49 @@ proto_library(
         "tendermint/crypto/keys.proto",
         "tendermint/crypto/proof.proto",
     ],
+    visibility = ["//visibility:public"],
+)
+
+cpp_grpc_library(
+    name = "crypto_cpp_grpc",
+    protos = [":crypto"],
+    visibility = ["//visibility:public"],
 )
 
 proto_library(
     name = "bits",
     srcs = ["tendermint/libs/bits/types.proto"],
+    visibility = ["//visibility:public"],
+)
+
+cpp_grpc_library(
+    name = "bits_cpp_grpc",
+    protos = [":bits"],
+    visibility = ["//visibility:public"],
 )
 
 proto_library(
     name = "mempool",
     srcs = ["tendermint/mempool/types.proto"],
+    visibility = ["//visibility:public"],
+)
+
+cpp_grpc_library(
+    name = "mempool_cpp_grpc",
+    protos = [":mempool"],
+    visibility = ["//visibility:public"],
 )
 
 proto_library(
     name = "version",
     srcs = ["tendermint/version/types.proto"],
+    visibility = ["//visibility:public"],
+)
+
+cpp_grpc_library(
+    name = "version_cpp_grpc",
+    protos = [":version"],
+    visibility = ["//visibility:public"],
 )
 
 proto_library(
@@ -44,7 +72,15 @@ proto_library(
     srcs = [
         "tendermint/types/validator.proto",
     ],
+    visibility = ["//visibility:public"],
     deps = [":crypto"],
+)
+
+cpp_grpc_library(
+    name = "types-validator_cpp_grpc",
+    protos = [":types-validator"],
+    visibility = ["//visibility:public"],
+    deps = [":crypto_cpp_grpc"],
 )
 
 proto_library(
@@ -52,9 +88,20 @@ proto_library(
     srcs = [
         "tendermint/types/block.proto",
     ],
+    visibility = ["//visibility:public"],
     deps = [
         ":types-evidence",
         ":types-types",
+    ],
+)
+
+cpp_grpc_library(
+    name = "types-block_cpp_grpc",
+    protos = [":types-block"],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":types-evidence_cpp_grpc",
+        ":types-types_cpp_grpc",
     ],
 )
 
@@ -63,10 +110,22 @@ proto_library(
     srcs = [
         "tendermint/types/evidence.proto",
     ],
+    visibility = ["//visibility:public"],
     deps = [
         ":types-types",
         ":types-validator",
         "@com_google_protobuf//:timestamp_proto",
+    ],
+)
+
+cpp_grpc_library(
+    name = "types-evidence_cpp_grpc",
+    protos = [":types-evidence"],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":types-types_cpp_grpc",
+        ":types-validator_cpp_grpc",
+        # "@com_google_protobuf//:timestamp_proto",
     ],
 )
 
@@ -75,8 +134,18 @@ proto_library(
     srcs = [
         "tendermint/types/params.proto",
     ],
+    visibility = ["//visibility:public"],
     deps = [
         "@com_google_protobuf//:duration_proto",
+    ],
+)
+
+cpp_grpc_library(
+    name = "types-params_cpp_grpc",
+    protos = [":types-params"],
+    visibility = ["//visibility:public"],
+    deps = [
+        # "@com_google_protobuf//:duration_proto",
     ],
 )
 
@@ -85,6 +154,7 @@ proto_library(
     srcs = [
         "tendermint/types/types.proto",
     ],
+    visibility = ["//visibility:public"],
     deps = [
         ":crypto",
         ":types-validator",
@@ -93,32 +163,52 @@ proto_library(
     ],
 )
 
-proto_library(
-    name = "types",
-    srcs = [],
+cpp_grpc_library(
+    name = "types-types_cpp_grpc",
+    protos = [":types-types"],
+    visibility = ["//visibility:public"],
     deps = [
-        "types-block",
-        "types-evidence",
-        "types-params",
-        "types-validator",
-        ":types-types",
+        ":crypto_cpp_grpc",
+        ":types-validator_cpp_grpc",
+        ":version_cpp_grpc",
     ],
 )
 
 proto_library(
     name = "blocksync",
     srcs = ["tendermint/blocksync/types.proto"],
+    visibility = ["//visibility:public"],
     deps = [
-        ":types",
+        ":types-block",
+    ],
+)
+
+cpp_grpc_library(
+    name = "blocksync_cpp_grpc",
+    protos = [":blocksync"],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":types-block_cpp_grpc",
     ],
 )
 
 proto_library(
-    name = "censensus",
-    srcs = ["tendermint/censensus/types.proto"],
+    name = "consensus",
+    srcs = ["tendermint/consensus/types.proto"],
+    visibility = ["//visibility:public"],
     deps = [
         ":bits",
-        ":types",
+        ":types-types",
+    ],
+)
+
+cpp_grpc_library(
+    name = "consensus_cpp_grpc",
+    protos = [":consensus"],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":bits_cpp_grpc",
+        ":types-types_cpp_grpc",
     ],
 )
 
@@ -129,32 +219,61 @@ proto_library(
         "tendermint/p2p/pex.proto",
         "tendermint/p2p/types.proto",
     ],
+    visibility = ["//visibility:public"],
     deps = [
         ":crypto",
+        "@com_google_protobuf//:timestamp_proto",
+    ],
+)
+
+cpp_grpc_library(
+    name = "p2p_cpp_grpc",
+    protos = [":p2p"],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":crypto_cpp_grpc",
     ],
 )
 
 proto_library(
     name = "statesync",
     srcs = ["tendermint/statesync/types.proto"],
-    deps = [":types"],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":types-params",
+        ":types-types",
+    ],
 )
 
-proto_library(
-    name = "abci",
-    srcs = ["tendermint/abci/types.proto"],
+cpp_grpc_library(
+    name = "statesync_cpp_grpc",
+    protos = [":statesync"],
+    visibility = ["//visibility:public"],
     deps = [
-        ":crypto",
-        ":types",
-        "@com_google_protobuf//:timestamp_proto",
+        ":types-params_cpp_grpc",
+        ":types-types_cpp_grpc",
     ],
 )
 
 proto_library(
-    name = "tendermint_protos",
-    srcs = [],
+    name = "abci_grpc",
+    srcs = ["tendermint/abci/types.proto"],
     visibility = ["//visibility:public"],
     deps = [
-        ":abci",
+        ":crypto",
+        ":types-params",
+        ":types-types",
+        "@com_google_protobuf//:timestamp_proto",
+    ],
+)
+
+cpp_grpc_library(
+    name = "abci_grpc_cpp",
+    protos = [":abci_grpc"],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":crypto_cpp_grpc",
+        ":types-params_cpp_grpc",
+        ":types-types_cpp_grpc",
     ],
 )
